@@ -103,10 +103,8 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 			    case "2":
 			    	if($level==1){
 			    		//9e. Ask how much and Launch the Mpesa Checkout to the user
-						$response = "CON How much are you depositing?\n";
-						$response .= " 1. 5 Shillings.\n";
-						$response .= " 2. 6 Shillings.\n";
-						$response .= " 3. 7 Shillings.\n";							
+						$response = "END Your minimum deposit of 5 shillings.\n";
+							
 
 						//Update sessions to level 9
 				    	$sqlLvl9="UPDATE `session_levels` SET `level`=9 where `session_id`='".$sessionId."'";
@@ -260,11 +258,6 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 			    	//9a. Collect Deposit from user, update db
 					switch ($userResponse) {
 					    case "1":
-				        // Return user to Main Menu & Demote user's level
-				    	$response = "END Kindly wait for the Checkout.\n";
-				    	// Print the response onto the page so that our gateway can read it
-				  		header('Content-type: text/plain');
-	 			  		echo $response;	
 
 					    //message
 					    	$depositMessage ="We have sent the MPESA checkout for KES 5/-... If you dont have a bonga pin, dial *126# to create one.";
@@ -314,7 +307,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 				    	// Print the response onto the page so that our gateway can read it
 				  		header('Content-type: text/plain');
 	 			  		echo $response;	
-	 			  							    
+
 					        //message
 					    	$depositMessage ="We have sent the MPESA checkout for KES 7/-... If you dont have a bonga pin, dial *126# to create one.";
 					    	$code = '77000';
