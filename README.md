@@ -189,7 +189,7 @@ if($level==0 || $level==1){
 	          	//Make a call
 	         	$from="+254711082300"; $to=$phoneNumber;
 	          	// Create a new instance of our awesome gateway class
-	          	$gateway = new AfricasTalkingGateway($username, $apikey);
+	          	$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 	          	try { $gateway->call($from, $to); }
 	          	catch ( AfricasTalkingGatewayException $e ){echo "Encountered an error when calling: ".$e->getMessage();}
 
@@ -258,7 +258,7 @@ if($level==0 || $level==1){
 				//JSON encode
 				$recipientStringFormat = json_encode($recipients);
 				//Create an instance of our gateway class, pass your credentials
-				$gateway = new AfricasTalkingGateway($username, $apiKey);    
+				$gateway = new AfricasTalkingGateway($username, $apiKey, "sandbox");    
 				try { $results = $gateway->sendAirtime($recipientStringFormat);}
 				catch(AfricasTalkingGatewayException $e){ echo $e->getMessage(); }
 
@@ -313,7 +313,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 1;
@@ -336,7 +336,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 2;
@@ -359,7 +359,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 3;
@@ -404,7 +404,7 @@ if($level==0 || $level==1){
 				    	$response .= " KES 1/- shortly... \n";
 
 						//Declare Params
-						$gateway = new AfricasTalkingGateway($username, $apiKey);
+						$gateway = new AfricasTalkingGateway($username, $apiKey, "sandbox");
 						$productName  = "Nerd Payments";
 						$currencyCode = "KES";
 						$recipient   = array("phoneNumber" => "".$phoneNumber."","currencyCode" => "KES","amount"=>1,"metadata"=>array("name"=>"Client","reason" => "Withdrawal"));
@@ -441,7 +441,7 @@ if($level==0 || $level==1){
 				    	$response .= " KES 2/- shortly... \n";
 
 						//Declare Params
-						$gateway = new AfricasTalkingGateway($username, $apiKey);
+						$gateway = new AfricasTalkingGateway($username, $apiKey, "sandbox");
 						$productName  = "Nerd Payments";
 						$currencyCode = "KES";
 						$recipient   = array("phoneNumber" => "".$phoneNumber."","currencyCode" => "KES","amount"=>2,"metadata"=>array("name"=>"Client","reason" => "Withdrawal"));
@@ -478,7 +478,7 @@ if($level==0 || $level==1){
 				    	$response .= " KES 3/- shortly... \n";
 
 						//Declare Params
-						$gateway = new AfricasTalkingGateway($username, $apiKey);
+						$gateway = new AfricasTalkingGateway($username, $apiKey, "sandbox");
 						$productName  = "Nerd Payments";
 						$currencyCode = "KES";
 						$recipient   = array("phoneNumber" => "".$phoneNumber."","currencyCode" => "KES","amount"=>3,"metadata"=>array("name"=>"Client","reason" => "Withdrawal"));
@@ -536,7 +536,7 @@ if($level==0 || $level==1){
             	$recipients = $phoneNumber;
             	$message    = "We have sent 1/- to".$userResponse." If this is a wrong number the transaction will fail.
             				   Your new balance is ".$newBal.". Thank you.";
-            	$gateway    = new AfricasTalkingGateway($username, $apikey);
+            	$gateway    = new AfricasTalkingGateway($username, $apikey, "sandbox");
             	try { $results = $gateway->sendMessage($recipients, $message, $code); }
             	catch ( AfricasTalkingGatewayException $e ) {echo "Encountered an error while sending: ".$e->getMessage(); }
 
@@ -549,7 +549,7 @@ if($level==0 || $level==1){
 	        	$db->query($sql11f);   
 
 				//Declare Params
-				$gateway = new AfricasTalkingGateway($username, $apiKey);
+				$gateway = new AfricasTalkingGateway($username, $apiKey, "sandbox");
 				$productName  = "Nerd Payments";
 				$currencyCode = "KES";
 				$recipient   = array("phoneNumber" => "".$phoneNumber."","currencyCode" => "KES","amount"=>1,"metadata"=>array("name"=>"Client","reason" => "Withdrawal"));
@@ -581,7 +581,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 1;
@@ -604,7 +604,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 2;
@@ -627,7 +627,7 @@ if($level==0 || $level==1){
 			    	$response .= "Dial dial *126*5*1# to create.\n";
 
 					//Declare Params
-					$gateway = new AfricasTalkingGateway($username, $apikey);
+					$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 					$productName  = "Nerd Payments";
 					$currencyCode = "KES";
 					$amount       = 3;
@@ -793,7 +793,7 @@ a) The script at https://b11cd817.ngrok.io/MfUSSD/microfinanceUSSD.php requests 
 	      	//Make a call
 	     	$from="+254711082300"; $to=$phoneNumber;
 	      	// Create a new instance of our awesome gateway class
-	      	$gateway = new AfricasTalkingGateway($username, $apikey);
+	      	$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 	      	try { $gateway->call($from, $to); }
 	      	catch ( AfricasTalkingGatewayException $e ){echo "Encountered an error when calling: ".$e->getMessage();}
 

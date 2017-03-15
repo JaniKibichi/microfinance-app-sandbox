@@ -272,7 +272,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						//pass to gateway
 						try {
 						  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
+						  if($transactionId){$results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);}
 						}
 						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
 				        break;	
@@ -290,7 +290,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						//pass to gateway
 						try {
 						  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
+						  if($transactionId){$results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);}
 						}
 						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
 					    break;
@@ -308,7 +308,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						//pass to gateway
 						try {
 						  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
+						  if($transactionId){$results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);}
 						}
 						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
 					    break;
