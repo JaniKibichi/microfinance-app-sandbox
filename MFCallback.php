@@ -23,8 +23,11 @@ if ( $category == "MobileCheckout" && $status == "Success" ) {
 	$balQuery=$db->query($sql11d);
 	$balAvailable=$balQuery->fetch_assoc();
 
+	//Update checkout DB
+    $sql11f = "UPDATE `checkout` SET `status`='received' WHERE `phonenumber` = '". $phoneNumber ."'";
+    $db->query($sql11f);
+
 	// Manage balance
-	$newBal = 100;
 	if($balAvailable=$balQuery->fetch_assoc()){
 	$newBal = $value + $balAvailable['balance'];					
 	}
@@ -33,8 +36,8 @@ if ( $category == "MobileCheckout" && $status == "Success" ) {
     $sql11e = "UPDATE `account` SET `balance`='".$newBal."' WHERE `phonenumber` = '". $phoneNumber ."'";
     $db->query($sql11e);
 
-		// SMS New Balance
-	$code = '20880';
+	// SMS New Balance
+	$code = '77000';
 	$recipients = $phoneNumber;
 	$message    = "We have sent ".$value." via".$userResponse." to Nerd Sacco. Your new balance is ".$newBal.". Thank you.";
 	$gateway    = new AfricasTalkingGateway($username, $apikey);
