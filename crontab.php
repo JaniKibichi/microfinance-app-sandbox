@@ -26,7 +26,7 @@ while($results = $statusQuery->fetch_assoc()){
 	$phoneNumber  = $results['phoneNumber'];;
 	$currencyCode = "KES";
 	$amount       = $results['amount'];
-	$metadata     = array("sacco"=>"Nerds","productId"=>"321"
+	$metadata     = array("sacco"=>"Nerds","productId"=>"321");
 
 	try {
 	  $transactionId = $gateway->initiateMobilePaymentCheckout($productName, $phoneNumber,$currencyCode, $amount, $metadata);
