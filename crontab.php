@@ -1,8 +1,7 @@
 <?php
-require_once('AfricasTalkingGateway.php');
-//Specify your credentials
-$username = "jani";
-$apiKey   = "d46192b5e6c1bdf6e24ae3760f5d49cde42e8b09d53f01fc929eec205996f5ce";
+	require_once('dbConnector.php');
+	require_once('AfricasTalkingGateway.php');
+	require_once('config.php');
 
 //Concept 
 /*
