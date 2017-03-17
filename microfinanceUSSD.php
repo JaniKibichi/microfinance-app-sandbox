@@ -260,7 +260,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 			    	//9a. Collect Deposit from user, update db
 					switch ($userResponse) {
 					    case "1":
-				        // Return user to Main Menu & Demote user's level
+					    //End session
 				    	$response = "END Kindly wait 1 minute for the Checkout.\n";
 				    	// Print the response onto the page so that our gateway can read it
 				  		header('Content-type: text/plain');
@@ -280,11 +280,12 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 
 						//Create pending record in checkout to be cleared by cronjobs
 			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
-			        	$db->query($sql9aa);  
+			        	$db->query($sql9aa); 
+
 				        break;	
 
 					    case "2":
-				        // Return user to Main Menu & Demote user's level
+				        // End session
 				    	$response = "END Kindly wait 1 minute for the Checkout.\n";
 				    	// Print the response onto the page so that our gateway can read it
 				  		header('Content-type: text/plain');
@@ -309,7 +310,7 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 					    break;
 
 					    case "3":
-				        // Return user to Main Menu & Demote user's level
+				        // End session
 				    	$response = "END Kindly wait 1 minute for the Checkout.\n";
 				    	// Print the response onto the page so that our gateway can read it
 				  		header('Content-type: text/plain');
