@@ -282,6 +282,9 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
 			        	$db->query($sql9aa); 
 
+			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
+			        	$db->query($sql9ab); 			        	
+
 				        break;	
 
 					    case "2":
@@ -306,6 +309,9 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						//Create pending record in checkout to be cleared by cronjobs
 			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
 			        	$db->query($sql9aa); 
+
+			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
+			        	$db->query($sql9ab); 			        	
 	       	
 					    break;
 
@@ -331,6 +337,9 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						//Create pending record in checkout to be cleared by cronjobs
 			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
 			        	$db->query($sql9aa); 
+
+			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
+			        	$db->query($sql9ab); 			        	
 
 					    break;
 
