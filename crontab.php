@@ -11,7 +11,7 @@
 */
 
 //5. Check the level of the user from the DB and retain default level if none is found for this session
-$sql = "select * from checkout where status = 'pending' ";
+$sql = "select * from checkoutSandbox where status = 'pending' ";
 $statusQuery = $db->query($sql);
 
 while($results = $statusQuery->fetch_assoc()){

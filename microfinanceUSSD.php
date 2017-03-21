@@ -25,8 +25,13 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
   		$level = $result['level'];
 	}	
 
-	//6. Update level accordingly
-	//if($result){  $level = $result['level']; }
+	//6. Create an account and ask questions later
+	$sql6 = "SELECT * FROM account WHERE phoneNumber LIKE '%".$phoneNumber."%' LIMIT 1";
+	$acQuery=$db->query($sql6);
+	if(!$acAvailable=$acQuery->fetch_assoc()){
+		$sql1A = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
+		$db->query($sql1A); 
+	}
 
 	//7. Check if the user is in the db
 	$sql7 = "SELECT * FROM microfinance WHERE phoneNumber LIKE '%".$phoneNumber."%' LIMIT 1";
@@ -266,24 +271,11 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 				  		header('Content-type: text/plain');
 	 			  		echo $response;	
 
-					    //message
-					    $depositMessage ="We have sent the MPESA checkout for KES 5/-... If you dont have a bonga pin, dial *126# to create one.";
-					    $code = '77000';
-						//Declare Params
 						$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 						$amount       = 5;
-						//pass to gateway
-						try {
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
-						}
-						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}	
-
 						//Create pending record in checkout to be cleared by cronjobs
-			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
-			        	$db->query($sql9aa); 
-
-			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
-			        	$db->query($sql9ab); 			        	
+			        	$sql9aa = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+			        	$db->query($sql9aa); 	        	
 
 				        break;	
 
@@ -294,24 +286,11 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 				  		header('Content-type: text/plain');
 	 			  		echo $response;	
 
-					    //message
-					    $depositMessage ="We have sent the MPESA checkout for KES 6/-... If you dont have a bonga pin, dial *126# to create one.";
-					    $code = '77000';
-						//Declare Params
 						$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 						$amount       = 6;
-						//pass to gateway
-						try {
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
-						}
-						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}	
-
 						//Create pending record in checkout to be cleared by cronjobs
-			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
-			        	$db->query($sql9aa); 
-
-			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
-			        	$db->query($sql9ab); 			        	
+			        	$sql9aa = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+			        	$db->query($sql9aa); 		        	
 	       	
 					    break;
 
@@ -322,24 +301,12 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 				  		header('Content-type: text/plain');
 	 			  		echo $response;	
 
-					    //message
-					    $depositMessage ="We have sent the MPESA checkout for KES 7/-... If you dont have a bonga pin, dial *126# to create one.";
-					    $code = '77000';
 						//Declare Params
 						$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 						$amount       = 7;
-						//pass to gateway
-						try {
-						  $results = $gateway->sendMessage($phoneNumber, $depositMessage, $code);
-						}
-						catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}	
-
 						//Create pending record in checkout to be cleared by cronjobs
-			        	$sql9aa = "INSERT INTO checkout (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
-			        	$db->query($sql9aa); 
-
-			        	$sql9ab = "INSERT INTO account (`phoneNumber`) VALUES('".$phoneNumber."')";
-			        	$db->query($sql9ab); 			        	
+			        	$sql9aa = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+			        	$db->query($sql9aa); 	        	
 
 					    break;
 
@@ -551,17 +518,10 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 					    	$response .= "If you dont have a bonga pin, dial \n";
 					    	$response .= "Dial dial *126# to create.\n";
 
-							//Declare Params
-							$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
-							$productName  = "Nerd Payments";
-							$currencyCode = "KES";
 							$amount       = 5;
-							$metadata     = array("Sacco Repayment"=>"Nerds","productId"=>"321");
-							//pass to gateway
-							try {
-							  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-							}
-							catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
+							//Create pending record in checkout to be cleared by cronjobs
+				        	$sql12a = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+				        	$db->query($sql12a); 	
 
 					  		// Print the response onto the page so that our gateway can read it
 					  		header('Content-type: text/plain');
@@ -574,18 +534,10 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 					    	$response .= "If you dont have a bonga pin, dial \n";
 					    	$response .= "Dial dial *126# to create.\n";
 
-							//Declare Params
-							$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
-							$productName  = "Nerd Payments";
-							$currencyCode = "KES";
 							$amount       = 6;
-							$metadata     = array("Sacco Repayment"=>"Nerds","productId"=>"321");
-							//pass to gateway
-							try {
-							  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-							}
-							catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
-
+							//Create pending record in checkout to be cleared by cronjobs
+				        	$sql12a = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+				        	$db->query($sql12a); 	
 					  		// Print the response onto the page so that our gateway can read it
 					  		header('Content-type: text/plain');
 					  		echo $response;	
@@ -597,17 +549,10 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 					    	$response .= "If you dont have a bonga pin, dial \n";
 					    	$response .= "Dial dial *126# to create.\n";
 
-							//Declare Params
-							$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
-							$productName  = "Nerd Payments";
-							$currencyCode = "KES";
 							$amount       = 7;
-							$metadata     = array("Sacco Repayment"=>"Nerds","productId"=>"321");
-							//pass to gateway
-							try {
-							  $transactionId = $gateway->initiateMobilePaymentCheckout($productName,$phoneNumber,$currencyCode,$amount,$metadata);
-							}
-							catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage();}		       	
+							//Create pending record in checkout to be cleared by cronjobs
+				        	$sql12a = "INSERT INTO checkoutSandbox (`status`,`amount`,`phoneNumber`) VALUES('pending','".$amount."','".$phoneNumber."')";
+				        	$db->query($sql12a); 	
 
 					  		// Print the response onto the page so that our gateway can read it
 					  		header('Content-type: text/plain');
