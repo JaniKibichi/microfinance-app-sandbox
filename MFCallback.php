@@ -18,18 +18,24 @@ if ( $category == "MobileCheckout" && $status == "Success" ) {
    $value       = $data["value"];
    $account     = $data["clientAccount"];
 
+	$valueArray=explode(' ', $value);
+	$valAmt=trim(end($valueArray));   
+
+	//string to int
+	$valAmt=+0;
+
     //Find and update Creditor
 	$sql11d = "SELECT * FROM account WHERE phoneNumber LIKE '%".$phoneNumber."%' LIMIT 1";
 	$balQuery=$db->query($sql11d);
 	$balAvailable=$balQuery->fetch_assoc();
 
 	//Update checkout DB
-    $sql11f = "UPDATE `checkout` SET `status`='received' WHERE `phonenumber` = '". $phoneNumber ."'";
+    $sql11f = "UPDATE `checkoutSandbox` SET `status`='received' WHERE `phonenumber` = '". $phoneNumber ."'";
     $db->query($sql11f);
 
 	// Manage balance
 	if($balAvailable=$balQuery->fetch_assoc()){
-	$newBal = $value + $balAvailable['balance'];					
+	$newBal = $valAmt + $balAvailable['balance'];					
 	}
 
 	// Update the DB
