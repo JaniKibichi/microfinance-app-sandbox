@@ -143,16 +143,35 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 			    case "4":
 			    	if($level==1){
 			    		//9g. Send Another User Some Money
-						$response = "CON You can only send 5 shillings.\n";
-						$response .= " Enter a valid phonenumber (like 0722122122)\n";					
+						$response = "CON You can only send 10.50 shillings.\n";
+						$response .= " Enter a valid phonenumber (like 0722122122)\n";	
+			  			// Print the response onto the page so that our gateway can read it
+			  			header('Content-type: text/plain');
+ 			  			echo $response;											
 
 						//Update sessions to level 11
 				    	$sqlLvl11="UPDATE `session_levels` SET `level`=11 where `session_id`='".$sessionId."'";
 				    	$db->query($sqlLvl11);
 
-			  			// Print the response onto the page so that our gateway can read it
-			  			header('Content-type: text/plain');
- 			  			echo $response;	 			    		
+				    	//Find account
+						$sql10a = "SELECT * FROM account WHERE phoneNumber LIKE '%".$phoneNumber."%' LIMIT 1";
+						$balQuery=$db->query($sql10a);
+						$balAvailable=$balQuery->fetch_assoc();
+
+						if($balAvailable=$balQuery->fetch_assoc()){
+						// Reduce balance
+						$newBal = $balAvailable['balance'];	
+						$newBal -= 5;				
+
+						    if($newBal > 0){					    	
+								$gateway = new AfricasTalkingGateway($username, $apiKey,'sandbox');
+								$productName  = "Hallo Hallo"; $currencyCode = "KES";
+								$recipient1   = array("phoneNumber" => $phoneNumber,"currencyCode" => "KES", "amount"=> 10.50,"metadata"=>array("name"=> "Clerk","reason" => "May Salary"));
+								$recipients  = array($recipient1);
+								try { $responses = $gateway->mobilePaymentB2CRequest($productName,$recipients); }
+								catch(AfricasTalkingGatewayException $e){ echo "Received error response: ".$e->getMessage(); }											    	
+	 			    		}
+ 			    	   }
 			    	}
 			        break;
 			    case "5":
@@ -167,32 +186,32 @@ if(!empty($_POST) && !empty($_POST['phoneNumber'])){
 						$newBal = $balAvailable['balance'];	
 						$newBal -= 5;				
 
-						if($newBal > 0){			    		
+							if($newBal > 0){			    		
 
 				    		//9e. Send user airtime
-						$response = "END Please wait while we load your account.\n";
-						// Search DB and the Send Airtime
-						$recipients = array( array("phoneNumber"=>"".$phoneNumber."", "amount"=>"KES 5") );
-						//JSON encode
-						$recipientStringFormat = json_encode($recipients);
-						//Create an instance of our gateway class, pass your credentials
-						$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");    
-						try { $results = $gateway->sendAirtime($recipientStringFormat);}
-						catch(AfricasTalkingGatewayException $e){ echo $e->getMessage(); }
+							$response = "END Please wait while we load your account.\n";
+							// Search DB and the Send Airtime
+							$recipients = array( array("phoneNumber"=>"".$phoneNumber."", "amount"=>"KES 5") );
+							//JSON encode
+							$recipientStringFormat = json_encode($recipients);
+							//Create an instance of our gateway class, pass your credentials
+							$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");    
+							try { $results = $gateway->sendAirtime($recipientStringFormat);}
+							catch(AfricasTalkingGatewayException $e){ echo $e->getMessage(); }
 
-                                                // Print the response onto the page so that our gateway can read it
-                                                header('Content-type: text/plain');
-                                                echo $response;
+	                        // Print the response onto the page so that our gateway can read it
+	                        header('Content-type: text/plain');
+	                        echo $response;
 
-						} else {
+							} else {
 					    	//Alert user of insufficient funds
 					    	$response = "END Sorry, you dont have sufficient\n";
 					    	$response .= " funds in your account \n";						
 
-                                                // Print the response onto the page so that our gateway can read it
-                                                header('Content-type: text/plain');
-                                                echo $response;
-						}
+	                        // Print the response onto the page so that our gateway can read it
+	                        header('Content-type: text/plain');
+	                        echo $response;
+							}
 
 						}
 			    	}

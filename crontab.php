@@ -22,7 +22,7 @@ while($results = $statusQuery->fetch_assoc()){
 	$gateway = new AfricasTalkingGateway($username, $apikey, "sandbox");
 
 	$productName  ="Nerd Payments"; 
-	$phoneNumber  = $results['phoneNumber'];;
+	$phoneNumber  = $results['phoneNumber'];
 	$currencyCode = "KES";
 	$amount       = $results['amount'];
 	$metadata     = array("sacco"=>"Nerds","productId"=>"321");
